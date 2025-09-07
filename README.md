@@ -63,8 +63,8 @@ Options:
 
 ## 📘 Output Format  
 Decoded packets are structured as nested dictionaries.
-Empty example:  
-```json
+Empty example:
+```text
 Packet from 127.0.0.1:3301 to 127.0.0.1:51694
 IP ID: 11089 | TCP Seq: 865758586 | Ack: 951312929 | Window: 6379
 Timestamp: 2025-09-07 20:20:12
@@ -76,10 +76,6 @@ Packet with empty payload
 
 Greeting example:  
 ```json
-Packet from 127.0.0.1:3301 to 127.0.0.1:51967
-IP ID: 0 | TCP Seq: 3450824968 | Ack: 414043792 | Window: 6380
-Timestamp: 2025-09-07 20:20:16
-
 {
     "Greeting message": {
         "Tarantool Version": {
@@ -96,16 +92,11 @@ Timestamp: 2025-09-07 20:20:16
         }
     }
 }
-================================================================================
 ```
 
 Command example:  
 ```json
-Packet from 127.0.0.1:51967 to 127.0.0.1:3301
-IP ID: 0 | TCP Seq: 414043858 | Ack: 3450832419 | Window: 6266
-Timestamp: 2025-09-07 20:20:16
-
-{
+[{
     "Iproto0": {
         "Size": {
             "Hex": "20",
@@ -127,13 +118,7 @@ Timestamp: 2025-09-07 20:20:16
             }
         }
     }
-}
-================================================================================
-
-Packet from 127.0.0.1:3301 to 127.0.0.1:51967
-IP ID: 0 | TCP Seq: 3450832419 | Ack: 414043891 | Window: 6380
-Timestamp: 2025-09-07 20:20:16
-
+},
 {
     "Iproto0": {
         "Size": {
@@ -157,8 +142,7 @@ Timestamp: 2025-09-07 20:20:16
             }
         }
     }
-}
-================================================================================
+}]
 ```
 
 ---
