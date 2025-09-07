@@ -1,0 +1,128 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iproto-tarantool-sniffer"
+version = "0.1.0"
+authors = [
+  { name="Ivan Gavalidi", email="malisek00@mail.ru" },
+]
+description = "A command-line tool for sniffing and decoding Tarantool Iproto packets"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.13"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Topic :: System :: Networking :: Monitoring",
+    "Topic :: Software Development :: Debuggers",
+]
+dependencies = [
+    "click==8.2.1",
+    "scapy==2.6.1",
+    "rich==14.1.0",
+    "msgpack==1.1.1",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/LaNdErTiS/iproto-tarantool-sniffer"
+"Bug Tracker" = "https://github.com/LaNdErTiS/iproto-tarantool-sniffer/issues"
+
+[project.scripts]
+iproto-sniffer = "iproto_sniffer.main:main"
+
+[project.optional-dependencies]
+dev = [
+    "mypy>=1.8.0",
+    "ruff>=0.1.0",
+    # "pytest>=7.0",
+    # "pytest-cov",
+]
+
+
+[tool.ruff]
+target-version = "py313"
+
+line-length = 120
+indent-width = 4
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+]
+ignore = [
+    "E501",
+    "B008",
+]
+
+fixable = ["ALL"]
+unfixable = ["B"]
+
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.ruff.lint.isort]
+known-first-party = ["packet_sniffer"]
+
+
+[tool.mypy]
+python_version = "3.13"
+mypy_path = "iproto_sniffer"
+files=["iproto_sniffer"]
+
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+exclude = [
+    "build",
+    "dist",
+    "venv",
+    ".venv",
+]
