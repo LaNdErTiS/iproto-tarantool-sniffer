@@ -12,7 +12,7 @@ from .utils import get_output_writer
 @click.option(
     "--filter",
     default="tcp port 3301",
-    help="BPF filter for sniffing (e.g., 'tcp port 80').",
+    help="Traffic filter for sniffing (e.g., 'tcp port 3301').",
 )
 @click.option("--from_pcap", default="", help="Path to a .pcap file to read from.")
 @click.option("--hex", is_flag=True, default=False, help="Include payload hex in output.")

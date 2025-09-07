@@ -16,7 +16,7 @@
 ## 📦 Installation  
 ```bash
 python3 -m venv .venv
-source venv/bin/activate
+source .venv/bin/activate
 python3 -m pip install git+https://github.com/LaNdErTiS/iproto-tarantool-sniffer.git or python3 -m pip install '.[dev]' or python3 -m pip install .
 ```
 
@@ -30,17 +30,26 @@ python3 -m pip install git+https://github.com/LaNdErTiS/iproto-tarantool-sniffer
 
 ## 🛠 Usage  
 ```bash
-iproto-sniffer --help
+iproto-sniffer --help  
 Usage: iproto-sniffer [OPTIONS]
 
+  A command-line network packet sniffer that captures and processes TCP
+  packets.
+
+  This tool captures TCP packets based on a specified filter, processes their
+  payloads, and outputs the results in a structured format, either to the
+  console or a file. It can read packets from a live network interface or a
+  .pcap file.
+
 Options:
-  -i, --interface TEXT   Network interface (default: lo0)
-  -f, --filter TEXT      Traffic filter (default: tcp port 3301)
-  -p, --from_pcap TEXT   Read from PCAP file
-  -x, --hex              Include hex dump in output
-  -o, --output TEXT      Output file path (default: stdout)
-  -e, --empty_packet     Show packets with empty payloads
-  -H, --show_headers     Display some IP/TCP headers
+  --interface TEXT  Network interface to sniff on.
+  --filter TEXT     Traffic filter for sniffing (e.g., 'tcp port 3301').
+  --from_pcap TEXT  Path to a .pcap file to read from.
+  --hex             Include payload hex in output.
+  --output TEXT     Path to the output file.
+  --empty_packet    Show packets with empty payload.
+  --show_headers    Show detailed IP/TCP headers.
+  --help            Show this message and exit.
 ```
 
 ### 🔍 Example Commands  
