@@ -40,7 +40,7 @@ def main(
     and outputs the results in a structured format, either to the console or a file.
     It can read packets from a live network interface or a .pcap file.
     """
-    if interface != 'any':
+    if interface != "any":
         conf.iface = interface  # type: ignore
 
     output_writer = get_output_writer(output)
