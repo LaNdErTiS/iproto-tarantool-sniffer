@@ -1,0 +1,28 @@
+credentials:
+  users:
+    guest:
+      roles: [ super ]
+    replicator:
+      password: 'replocator'
+      roles: [ replication ]
+
+replication:
+  peers:
+    - replicator:replocator@tarantool1:3301
+    - replicator:replocator@tarantool2:3302
+  failover: manual
+
+groups:
+  group001:
+    replicasets:
+      replicaset001:
+        leader: instance-001
+        instances:
+          instance-001:
+            iproto:
+              listen:
+              - uri: 'tarantool1:3301'
+          instance-002:
+            iproto:
+              listen:
+              - uri: 'tarantool2:3302'

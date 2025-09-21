@@ -40,7 +40,8 @@ def main(
     and outputs the results in a structured format, either to the console or a file.
     It can read packets from a live network interface or a .pcap file.
     """
-    conf.iface = interface  # type: ignore
+    if interface != 'any':
+        conf.iface = interface  # type: ignore
 
     output_writer = get_output_writer(output)
 
@@ -56,10 +57,10 @@ def main(
     try:
         if from_pcap:
             click.echo(f"Reading packets from file: {from_pcap}")
-            sniff(offline=from_pcap, prn=callback_with_options, filter="", store=0)
+            sniff(offline=from_pcap, prn=callback_with_options, filter=filter, store=0)
         else:
             click.echo(f"Starting sniffing on interface: {interface} with filter: '{filter}'")
-            sniff(filter="", prn=callback_with_options, store=0)
+            sniff(filter=filter, prn=callback_with_options, store=0)
     except PermissionError:
         click.echo(
             f"Error: Permission denied. Try running with sudo/administrator privileges to sniff on '{interface}'"

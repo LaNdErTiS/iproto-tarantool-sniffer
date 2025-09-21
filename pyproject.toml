@@ -2,6 +2,9 @@
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+packages = ["iproto_sniffer"]
+
 [project]
 name = "iproto-tarantool-sniffer"
 version = "0.1.0"
@@ -11,7 +14,7 @@ authors = [
 description = "A command-line tool for sniffing and decoding Tarantool Iproto packets"
 readme = "README.md"
 license = {file = "LICENSE"}
-requires-python = ">=3.13"
+requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
