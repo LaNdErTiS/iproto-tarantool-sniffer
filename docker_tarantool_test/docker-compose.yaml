@@ -1,0 +1,47 @@
+version: '2'
+
+networks:
+  tarantool-net:
+    driver: bridge
+
+services:
+  tarantool1:
+    image: tarantool/tarantool:3.5.0
+    container_name: tarantool1
+    networks:
+      - tarantool-net
+    ports:
+      - "3301:3301"
+    volumes:
+      - ./config:/opt/tarantool/test_tnt/
+    environment:
+      - TT_INSTANCE_NAME=instance-001
+      - TT_APP_NAME=test_tnt
+
+  tarantool2:
+    image: tarantool/tarantool:3.5.0
+    container_name: tarantool2
+    networks:
+      - tarantool-net
+    ports:
+      - "3302:3302"
+    volumes:
+      - ./config:/opt/tarantool/test_tnt/
+    environment:
+      - TT_INSTANCE_NAME=instance-002
+      - TT_APP_NAME=test_tnt
+
+  sniffer:
+    image: iproto_sniffer:1.0.0
+    build:
+      context: ../
+      dockerfile: Dockerfile.sniffer
+    volumes:
+      - ./:/opt/sniffer/
+    user: root
+    container_name: sniffer
+    network_mode: "service:tarantool1"
+    privileged: true
+    command: ["iproto-sniffer", "--interface", "eth0", "--hex", "--show_headers", "--output", "sniffered.txt"]
+    depends_on:
+      - tarantool1

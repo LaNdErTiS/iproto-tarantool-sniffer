@@ -21,7 +21,7 @@ python3 -m pip install git+https://github.com/LaNdErTiS/iproto-tarantool-sniffer
 ```
 
 **Requirements**:  
-- Python 3.13+  
+- Python 3.10+  
 - [Scapy](https://scapy.net/)  
 - [msgpack](https://github.com/msgpack/msgpack-python)  
 - [Rich](https://github.com/Textualize/rich)  
@@ -180,6 +180,42 @@ See [LICENSE](LICENSE) for details.
 
 ## 🌐 Links  
 - [Homepage](https://github.com/LaNdErTiS/iproto-tarantool-sniffer)  
-- [Tarantool Iproto Docs](https://www.tarantool.io/en/doc/latest/reference/internals/)  
+- [Tarantool Iproto Docs](https://www.tarantool.io/en/doc/latest/reference/internals/)
 
 ---
+
+## 🧪 Local Testing with Docker
+
+You can now easily test the project locally using Docker and Docker Compose. This setup spins up two Tarantool instances and a network sniffer to analyze the traffic between them in an isolated environment.
+
+### 📦 Setup Overview
+
+The configuration consists of the following services, defined in the `docker-compose.yml` file:
+
+*   **Two Tarantool Instances (`tarantool1`, `tarantool2`)**:
+    *   **Image**: `tarantool/tarantool:3.5.0`
+    *   **Network**: Both containers are connected to an isolated bridge network named `tarantool-net` for inter-container communication.
+    *   **Ports**: Exposed to the host machine for easy access:
+        *   `tarantool1`: `localhost:3301`
+        *   `tarantool2`: `localhost:3302`
+    *   **Configuration**: Configuration files are mounted from the local `./config` directory into `/opt/tarantool/test_tnt/` inside the container.
+    *   **Environment Variables**: Used to set the instance name (`TT_INSTANCE_NAME`) and application name (`TT_APP_NAME`).
+
+*   **IPROTO Sniffer (`sniffer`)**:
+    *   **Image**: Built from `Dockerfile.sniffer` located in the parent directory. It's based on Python 3.10 and includes necessary dependencies like `libpcap-dev`.
+    *   **Function**: Captures and analyzes IPROTO network traffic.
+    *   **Operation Mode**: Runs in privileged mode (`privileged: true`) and uses the network stack of the `tarantool1` service (`network_mode: "service:tarantool1"`), allowing it to "see" all of its network traffic.
+    *   **Output**: Saves captured packets in hex format with headers to the `sniffered.txt` file in the current directory on the host machine.
+
+### 🛠 How to Run
+
+To start the entire test environment, run the following command in your terminal from the directory containing the `docker-compose.yml` file:
+
+```bash
+docker-compose up -d
+```
+
+### How to Stop
+```bash
+docker-compose down
+```
